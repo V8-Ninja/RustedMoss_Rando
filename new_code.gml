@@ -63,7 +63,7 @@ if (global.speedrun_mode_ && ds_map_exists(global.save_data, ("rando_" + name)))
 
 if variable_instance_exists(id, "index")
 {
-    if (index == 0)
+    if (index == 0 && visible == false)
         ds_map_set(global.save_data, "rando_found_railgun", 1)
 }
 
