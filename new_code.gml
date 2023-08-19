@@ -21,19 +21,21 @@ if (argument0 == "Speedrun_text")
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (ds_map_find_value(global.save_data, "playtime") == 0 || ds_map_find_value(global.save_data, "wep_0") == 0)
-    global.weapon_data[0].found = ds_map_find_value(global.save_data, "randomizer_start_weapon") == 0
-var rifleFound = global.weapon_data[0].found
-var shotgunFound = global.weapon_data[1].found
-var boltFound = global.weapon_data[2].found
-var sniperFound = global.weapon_data[3].found
-var rocketFound = global.weapon_data[4].found
-var pistolFound = global.weapon_data[5].found
-if (rifleFound == 0 && shotgunFound == 0 && boltFound == 0 && sniperFound == 1 && rocketFound == 0 && pistolFound == 0)
+if (global.speedrun_mode_ == 1)
 {
-    if (global.mp < global.stat_max_mp)
-        global.mp++
-    alarm[10] = 240
+    global.weapon_data[0].found = ds_map_find_value(global.save_data, "rando_found_railgun") == 1
+    var rifleFound = global.weapon_data[0].found
+    var shotgunFound = global.weapon_data[1].found
+    var boltFound = global.weapon_data[2].found
+    var sniperFound = global.weapon_data[3].found
+    var rocketFound = global.weapon_data[4].found
+    var pistolFound = global.weapon_data[5].found
+    if (rifleFound == 0 && shotgunFound == 0 && boltFound == 0 && sniperFound == 1 && rocketFound == 0 && pistolFound == 0)
+    {
+        if (global.mp < global.stat_max_mp)
+            global.mp++
+        alarm[10] = 240
+    }
 }
 
 /*
@@ -50,8 +52,20 @@ alarm[10] = 1
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (global.speedrun_mode_ && ds_map_exists(global.rando_data, name))
-    index = ds_map_find_value(global.rando_data, name)
+if (global.speedrun_mode_ && ds_map_exists(global.save_data, ("rando_" + name)))
+    index = ds_map_find_value(global.save_data, ("rando_" + name))
+	
+/*
+	===== gml_Object_opickup_gun_CleanUp_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if variable_instance_exists(id, "index")
+{
+    if (index == 0)
+        ds_map_set(global.save_data, "rando_found_railgun", 1)
+}
 
 /*
 	===== gml_Object_opickup_trinket_PreCreate_0 =====
@@ -67,8 +81,8 @@ alarm[10] = 1
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (global.speedrun_mode_ && ds_map_exists(global.rando_data, name))
-	index = ds_map_find_value(global.rando_data, name)
+if (global.speedrun_mode_ && ds_map_exists(global.save_data, ("rando_" + name)))
+    index = ds_map_find_value(global.save_data, ("rando_" + name))
 
 /*
 	===== gml_Object_par_shop_PreCreate_0 =====
@@ -84,10 +98,10 @@ alarm[10] = 1
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (global.speedrun_mode_ && ds_map_exists(global.rando_data, "shop_intro_0"))
+if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_intro_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.rando_data, ("shop_intro_" + string(itr)))
+        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_intro_" + string(itr)))
 }
 
 /*
@@ -104,10 +118,10 @@ alarm[11] = 2
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (global.speedrun_mode_ && ds_map_exists(global.rando_data, "shop_lake_0"))
+if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_lake_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.rando_data, ("shop_lake_" + string(itr)))
+        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_lake_" + string(itr)))
 }
 
 /*
@@ -124,8 +138,8 @@ alarm[11] = 2
 	!!! This script must be created via the Undertale Mod Tool UI !!!
 */
 
-if (global.speedrun_mode_ && ds_map_exists(global.rando_data, "shop_fae_0"))
+if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_fae_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.rando_data, ("shop_fae_" + string(itr)))
+        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_fae_" + string(itr)))
 }
