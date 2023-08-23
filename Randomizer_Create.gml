@@ -9,6 +9,7 @@
 function generate_rando_from_seed(argument0) {}
 function rando_place_weapons(argument0) {}
 function rando_place_trinkets() {}
+function rando_place_stat_upgrades() {}
 
 // Complete Code
 
@@ -222,4 +223,54 @@ function rando_place_trinkets() //gml_Script_rando_place_trinkets
         currentTrinket = round(random_range(-0.49, 33.49))
     ds_map_set(global.save_data, "rando_shop_fae_2", currentTrinket)
     trinketsPlaced[currentTrinket] = 1
+}
+
+function rando_place_stat_upgrades() //gml_Script_rando_place_stat_upgrades
+{
+    show_debug_message("===== FILLING ARRAY OF UPGRADE LOCATIONS =====")
+    var locations = array_create(25, "")
+    array_set(locations, 0, "pickup_hp_rm_test_hidden_3")
+    array_set(locations, 1, "pickup_hp_rm_mount_4_half_right")
+    array_set(locations, 2, "pickup_hp_rm_test_hidden")
+    array_set(locations, 3, "pickup_hp_rm_forest_cafe_3")
+    array_set(locations, 4, "pickup_hp_rm_sea_extra_2")
+    array_set(locations, 5, "pickup_hp_rm_test_before_boss_alt")
+    array_set(locations, 6, "pickup_hp_rm_underhang_b20")
+    array_set(locations, 7, "pickup_mp_rm_lake_hidden_3")
+    array_set(locations, 8, "pickup_mp_rm_forest_extra_3")
+    array_set(locations, 9, "pickup_mp_rm_sea_left_2")
+    array_set(locations, 10, "pickup_mp_rm_catacombs_extra_1")
+    array_set(locations, 11, "pickup_mp_rm_sea_2")
+    array_set(locations, 12, "pickup_mp_rm_moss_hidden_1")
+    array_set(locations, 13, "pickup_mp_rm_4_hidden")
+    array_set(locations, 14, "pickup_mp_rm_mount_intro_begin")
+    array_set(locations, 15, "pickup_mp_rm_test_alt_alt")
+    array_set(locations, 16, "pickup_tp_rm_moss_8")
+    array_set(locations, 17, "pickup_tp_rm_lake_hidden_4")
+    array_set(locations, 18, "pickup_tp_rm_forest_extra_0")
+    array_set(locations, 19, "pickup_tp_rm_hidden_4")
+    array_set(locations, 20, "pickup_tp_rm_catacombs_extra_3")
+    array_set(locations, 21, "pickup_tp_rm_moss_3")
+    array_set(locations, 22, "pickup_tp_rm_mount_10_alt")
+    array_set(locations, 23, "pickup_tp_rm_underhang_extra_2")
+    array_set(locations, 24, "pickup_tp_rm_moss_top_cave")
+    show_debug_message("===== FILLING ARRAY OF STAT UPGRADES =====")
+    var upgrades_available = array_create(25, 0)
+    for (itr = 0; itr < 7; itr++)
+        array_set(upgrades_available, itr, 1)
+    for (itr = 0; itr < 9; itr++)
+        array_set(upgrades_available, (itr + 7), 2)
+    for (itr = 0; itr < 9; itr++)
+        array_set(upgrades_available, (itr + 16), 3)
+    show_debug_message("===== CHOOSING RANDOM LOCATIONS FOR UPGRADES TO BE PLACED =====")
+    var loc_index = 0
+    var up_index = 0
+    while (array_length(upgrades_available) > 0)
+    {
+        loc_index = random_range(-0.49, (array_length(locations) - 0.51))
+        up_index = random_range(-0.49, (array_length(upgrades_available) - 0.51))
+        ds_map_set(global.save_data, ("rando_" + array_get(locations, loc_index)), array_get(upgrades_available, up_index))
+        array_delete(locations, loc_index, 1)
+        array_delete(upgrades_available, up_index, 1)
+    }
 }
