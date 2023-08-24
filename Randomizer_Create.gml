@@ -257,11 +257,11 @@ function rando_place_stat_upgrades() //gml_Script_rando_place_stat_upgrades
     show_debug_message("===== FILLING ARRAY OF STAT UPGRADES =====")
     var upgrades_available = array_create(25, 0)
     for (itr = 0; itr < 7; itr++)
-        array_set(upgrades_available, itr, 1)
+        array_set(upgrades_available, itr, 40)
     for (itr = 0; itr < 9; itr++)
-        array_set(upgrades_available, (itr + 7), 2)
+        array_set(upgrades_available, (itr + 7), 41)
     for (itr = 0; itr < 9; itr++)
-        array_set(upgrades_available, (itr + 16), 3)
+        array_set(upgrades_available, (itr + 16), 42)
     show_debug_message("===== CHOOSING RANDOM LOCATIONS FOR UPGRADES TO BE PLACED =====")
     var loc_index = 0
     var up_index = 0

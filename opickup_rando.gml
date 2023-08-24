@@ -31,13 +31,13 @@ if ds_map_exists(global.save_data, save_name)
 item_type = ds_map_find_value(global.save_data, ("rando_" + save_name))
 switch item_type
 {
-    case 1:
+    case 40:
         sprite_index = shp_up
         break
-    case 2:
+    case 41:
         sprite_index = smp_up
         break
-    case 3:
+    case 42:
         sprite_index = strinket_point_pickup
         break
 }
@@ -56,17 +56,17 @@ if variable_instance_exists(id, "save_name")
             global.gamestate = (3 << 0)
             switch item_type
             {
-                case 1:
+                case 40:
                     global.current_pickup = 0
                     global.stat_max_hp += 1
                     global.hp = max(1, global.stat_max_hp)
                     break
-                case 2:
+                case 41:
                     global.current_pickup = 2
                     global.stat_max_mp += 2
                     global.mp = max(1, global.stat_max_mp)
                     break
-                case 3:
+                case 42:
                     global.current_pickup = 3
                     global.max_trinkets_points_ += 2
                     global.hp = max(1, global.stat_max_hp)
