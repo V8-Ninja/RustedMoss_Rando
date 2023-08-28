@@ -29,8 +29,21 @@ event_inherited()
 if ds_map_exists(global.save_data, save_name)
     instance_destroy()
 item_type = ds_map_find_value(global.save_data, ("rando_" + save_name))
-switch item_type
+var sprite_type = item_type
+if (item_type < 6)
+    sprite_type = 0
+if (item_type > 5 && item_type < 40)
+    sprite_type = 6
+switch sprite_type
 {
+    case 0:
+        sprite_index = splayer_gun_pickup
+        image_speed = 0
+        image_index = item_type
+        break
+    case 6:
+        sprite_index = strinket_pickup
+        break
     case 40:
         sprite_index = shp_up
         break
@@ -40,7 +53,11 @@ switch item_type
     case 42:
         sprite_index = strinket_point_pickup
         break
+    default:
+        break
 }
+
+
 
 /*
 	===== Step 0 =====
@@ -51,11 +68,30 @@ if variable_instance_exists(id, "save_name")
     {
         if place_meeting(x, y, oplayer)
         {
+            show_debug_message("===== SETTING PLAYER & GAME STATES =====")
             global.invis = 2
             oplayer.state = (2 << 0)
             global.gamestate = (3 << 0)
-            switch item_type
+            show_debug_message("===== PER-PICKUP FUNCTIONALITY =====")
+            var pickup_type = item_type
+            if (pickup_type < 6)
+                pickup_type = 0
+            if (pickup_type > 5 && pickup_type < 40)
+                pickup_type = 6
+            switch pickup_type
             {
+                case 0:
+                    global.current_pickup = 6
+                    global.current_pickup_trinket = item_type
+                    global.weapon_data[item_type].found = 1
+                    if (item_type == 0)
+                        ds_map_set(global.save_data, "rando_found_railgun", 1)
+                    break
+                case 6:
+                    global.current_pickup = 1
+                    global.current_pickup_trinket = (item_type - 6)
+                    global.trinket_data_[(item_type - 6)].found = 1
+                    break
                 case 40:
                     global.current_pickup = 0
                     global.stat_max_hp += 1
@@ -73,12 +109,14 @@ if variable_instance_exists(id, "save_name")
                     break
             }
 
+            show_debug_message("===== INCREMENTING UPGRADE COUNTERS =====")
             global.upgrades_found_++
             var biome_save_name = ("pickups_found_in" + string(global.current_biome_))
             var biome_pickups = 0
             if ds_map_exists(global.save_data, biome_save_name)
                 biome_pickups = ds_map_find_value(global.save_data, biome_save_name)
             ds_map_set(global.save_data, biome_save_name, (biome_pickups + 1))
+            show_debug_message("===== SAVING PICKUP INFO & HIDING PICKUP =====")
             ds_map_set(global.save_data, save_name, 1)
             global.gamestate = (27 << 0)
             visible = false
