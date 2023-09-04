@@ -353,4 +353,6 @@ if global.speedrun_mode_
         }
 
     }
+	if keyboard_check_pressed(vk_f9)
+        global.munney += 10
 }

@@ -14,7 +14,6 @@ function rando_place_progression() {}
 function rando_place_upgrades() {}
 function rando_check_placement(argument0, argument1) {}
 
-
 // Complete Code
 
 show_debug_message("===== CREATING ARRAYS FOR RANDOMIZER USE =====")
@@ -52,8 +51,8 @@ function generate_rando_from_seed(argument0) //gml_Script_generate_rando_from_se
     ds_map_set(global.save_data, "rando_start_weapon", startWeapon)
     ds_map_set(global.save_data, "rando_found_railgun", startWeapon == 0)
     rando_define_locations()
-    rando_define_progression()
-    rando_define_upgrades()
+    rando_define_progression(startWeapon)
+    rando_define_upgrades(startWeapon)
     rando_place_progression()
     rando_place_upgrades()
 }
@@ -114,7 +113,7 @@ function rando_define_locations() //gml_Script_rando_define_locations
     array_set(global.randoLocations, 48, "pickup_mp_rm_sea_left_2")
     array_set(global.randoLocations, 49, "pickup_mp_rm_catacombs_extra_1")
     array_set(global.randoLocations, 50, "pickup_mp_rm_sea_2")
-    array_set(global.randoLocations, 51, "pickup_mp_rm_moss_hidden_")
+    array_set(global.randoLocations, 51, "pickup_mp_rm_moss_hidden_1")
     array_set(global.randoLocations, 52, "pickup_mp_rm_4_hidden")
     array_set(global.randoLocations, 53, "pickup_mp_rm_mount_intro_begin")
     array_set(global.randoLocations, 54, "pickup_mp_rm_test_alt_alt")
@@ -142,14 +141,14 @@ function rando_define_progression(argument0) //gml_Script_rando_define_progressi
     array_set(global.randoProgression, 3, 10)
     array_set(global.randoProgression, 4, 30)
     show_debug_message("===== DELETING PROGRESSION ARRAY INSTANCE IF STARTING WEAPON WAS PROGRESSION =====")
+    var idsToDelete = array_create(0, -1)
     for (itr = 0; itr < array_length(global.randoProgression); itr++)
     {
         if (array_get(global.randoProgression, itr) == -1)
-        {
-            array_delete(global.randoProgression, itr, 1)
-            itr--
-        }
+            array_push(idsToDelete, itr)
     }
+    for (itr = 0; itr < array_length(idsToDelete); itr++)
+        array_delete(global.randoProgression, (array_get(idsToDelete, itr) - itr), 1)
 }
 
 function rando_define_upgrades(argument0) //gml_Script_rando_define_upgrades
@@ -187,8 +186,9 @@ function rando_define_upgrades(argument0) //gml_Script_rando_define_upgrades
     array_set(global.randoUpgrades, 25, 29)
     array_set(global.randoUpgrades, 26, 31)
     array_set(global.randoUpgrades, 27, 32)
-    array_set(global.randoUpgrades, 28, 34)
-    array_set(global.randoUpgrades, 29, 35)
+    array_set(global.randoUpgrades, 28, 33)
+    array_set(global.randoUpgrades, 29, 34)
+    array_set(global.randoUpgrades, 30, 35)
     array_set(global.randoUpgrades, 31, 36)
     array_set(global.randoUpgrades, 32, 37)
     array_set(global.randoUpgrades, 33, 38)
@@ -222,14 +222,14 @@ function rando_define_upgrades(argument0) //gml_Script_rando_define_upgrades
     array_set(global.randoUpgrades, 58, 42)
     array_set(global.randoUpgrades, 59, 42)
     show_debug_message("===== DELETING UPGRADE ARRAY INSTANCE IF STARTING WEAPON WAS UPGRADE =====")
+    idsToDelete = array_create(0, -1)
     for (itr = 0; itr < array_length(global.randoUpgrades); itr++)
     {
         if (array_get(global.randoUpgrades, itr) == -1)
-        {
-            array_delete(global.randoUpgrades, itr, 1)
-            itr--
-        }
+            array_push(idsToDelete, itr)
     }
+    for (itr = 0; itr < array_length(idsToDelete); itr++)
+        array_delete(global.randoUpgrades, (array_get(idsToDelete, itr) - itr), 1)
 }
 
 function rando_place_progression() //gml_Script_rando_place_progression

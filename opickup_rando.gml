@@ -57,8 +57,6 @@ switch sprite_type
         break
 }
 
-
-
 /*
 	===== Step 0 =====
 */
