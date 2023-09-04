@@ -1,0 +1,45 @@
+## Randomizer IDs for Items/Upgrades
+
+- 00 = Rail
+- 01 = Shotgun
+- 02 = Bolt Dispenser
+- 03 = Sniper
+- 04 = Rocket Launcher
+- 05 = Pistol
+- 06 = Trinket #1 (Incendiary Essence)
+- 07 = Trinket #2 (Tattered Blindfold)
+- 08 = Trinket #3 (Giant Chambers)
+- 09 = Trinket #4 (Magnet)
+- 10 = Trinket #5 (Ruby Slippers)
+- 11 = Trinket #6 (Fairy Ointment)
+- 12 = Trinket #7 (Energy Refiner)
+- 13 = Trinket #8 (Lucky Clover Pearl)
+- 14 = Trinket #9 (Time Manipulator)
+- 15 = Trinket #10 (Spiced Gunpowder)
+- 16 = Trinket #11 (Powdered Fae Silver)
+- 17 = Trinket #12 (Sprite's Breath)
+- 18 = Trinket #13 (Wing Clipper)
+- 19 = Trinket #14 (Powdered Nightshade)
+- 20 = Trinket #15 (Cracked Monocle)
+- 21 = Trinket #16 (Magnetic Bullets)
+- 22 = Trinket #17 (Thorny Rose)
+- 23 = Trinket #18 (Rusted Coin)
+- 24 = Trinket #19 (Cleansing Charm)
+- 25 = Trinket #20 (Erosive Bullets)
+- 26 = Trinket #21 (Gaurdian Fae)
+- 27 = Trinket #22 (Cricket Bone Whip)
+- 28 = Trinket #23 (Dandelion Bomb)
+- 29 = Trinket #24 (HP Overload)
+- 30 = Trinket #25 (Heavy Ammo)
+- 31 = Trinket #26 (Short Fuse)
+- 32 = Trinket #27 (Thorny Wings)
+- 33 = Trinket #28 (Maya's Trinket)
+- 34 = Trinket #29 (Fern's Trinket)
+- 35 = Trinket #30 (Fae of Love)
+- 36 = Trinket #31 (Fae of Hate)
+- 37 = Trinket #32 (Fae of Glass)
+- 38 = Trinket #33 (Titania's Protection)
+- 39 = Trinket #34 (Energy Disruptor)
+- 40 = HP Upgrade (Total of 7)
+- 41 = MP Upgrade (Total of 9)
+- 42 - TP Upgrade (Total of 9)

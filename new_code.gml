@@ -10,7 +10,7 @@ if (argument0 == "Speedrun_text")
         case 0:
             return "Randomizer";
         case 1:
-            return "(ALPHA v0.0.2) Speedrun Mode changes + Shuffles weapon and trinket placements";
+            return "(ALPHA v0.0.3) Speedrun Mode changes + Randomizes weapon, trinket, & stat up placements";
     }
 
 }
@@ -39,52 +39,6 @@ if (global.speedrun_mode_ == 1)
 }
 
 /*
-	===== gml_Object_opickup_gun_PreCreate_0 =====
-	
-	!!! This script must be created via the Undertale Mod Tool UI !!!
-*/
-
-alarm[10] = 1
-
-/*
-	===== gml_Object_opickup_gun_Alarm_10 =====
-	
-	!!! This script must be created via the Undertale Mod Tool UI !!!
-*/
-
-if (global.speedrun_mode_ && ds_map_exists(global.save_data, ("rando_" + name)))
-    index = ds_map_find_value(global.save_data, ("rando_" + name))
-	
-/*
-	===== gml_Object_opickup_gun_CleanUp_0 =====
-	
-	!!! This script must be created via the Undertale Mod Tool UI !!!
-*/
-
-if variable_instance_exists(id, "index")
-{
-    if (index == 0 && visible == false)
-        ds_map_set(global.save_data, "rando_found_railgun", 1)
-}
-
-/*
-	===== gml_Object_opickup_trinket_PreCreate_0 =====
-	
-	!!! This script must be created via the Undertale Mod Tool UI !!!
-*/
-
-alarm[10] = 1
-
-/*
-	===== gml_Object_opickup_trinket_Alarm_10 =====
-	
-	!!! This script must be created via the Undertale Mod Tool UI !!!
-*/
-
-if (global.speedrun_mode_ && ds_map_exists(global.save_data, ("rando_" + name)))
-    index = ds_map_find_value(global.save_data, ("rando_" + name))
-
-/*
 	===== gml_Object_par_shop_PreCreate_0 =====
 	
 	!!! This script must be created via the Undertale Mod Tool UI !!!
@@ -101,7 +55,7 @@ alarm[10] = 1
 if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_intro_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_intro_" + string(itr)))
+        shop_data[itr].index = (ds_map_find_value(global.save_data, ("rando_shop_intro_" + string(itr))) - 6)
 }
 
 /*
@@ -121,7 +75,7 @@ alarm[11] = 2
 if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_lake_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_lake_" + string(itr)))
+        shop_data[itr].index = (ds_map_find_value(global.save_data, ("rando_shop_lake_" + string(itr))) - 6)
 }
 
 /*
@@ -141,5 +95,137 @@ alarm[11] = 2
 if (global.speedrun_mode_ && ds_map_exists(global.save_data, "rando_shop_fae_0"))
 {
     for (var itr = 0; itr < 3; itr++)
-        shop_data[itr].index = ds_map_find_value(global.save_data, ("rando_shop_fae_" + string(itr)))
+        shop_data[itr].index = (ds_map_find_value(global.save_data, ("rando_shop_fae_" + string(itr))) - 6)
+}
+
+/*
+	===== gml_Object_onpc_lilly_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+    ds_map_set(global.save_data, "story_string_lilly_triggered", 1)
+
+/*
+	===== gml_Object_opickup_gun_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+{
+    var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+    randoItem.save_name = ("pickup_weapon_" + room_get_name(room))
+    instance_destroy()
+}
+
+/*
+	===== gml_Object_opickup_trinket_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+{
+    var do_pickup_swap = 1
+    var rm_name = room_get_name(room)
+    if (rm_name == "rm_sea_8_alt")
+    {
+        show_debug_message("do NOT swap, need to do it after trinket moves")
+        do_pickup_swap = 0
+    }
+    if (rm_name == "rm_lake_extra_6")
+    {
+        show_debug_message("only do swap AFTER player has woken up Nell")
+        if ds_map_exists(global.save_data, "story_string_nell_meet_third")
+            do_pickup_swap = ds_map_find_value(global.save_data, "story_string_nell_meet_third") == 1
+        else
+            do_pickup_swap = 0
+    }
+    if (rm_name == "rm_lab_red_alt")
+    {
+        show_debug_message("only do swap AFTER player has rescued Eli")
+        if ds_map_exists(global.save_data, "story_string_eli_meet_third")
+            do_pickup_swap = ds_map_find_value(global.save_data, "story_string_eli_meet_third") == 1
+        else
+            do_pickup_swap = 0
+    }
+    if do_pickup_swap
+    {
+        var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+        randoItem.save_name = ("pickup_trinket_" + room_get_name(room))
+        instance_destroy()
+    }
+}
+
+/*
+	===== gml_Object_opickup_trinket_Step_1 (BeginStep) =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if (global.speedrun_mode_ == 1)
+{
+    var do_swap = 0
+    if (name == "pickup_trinket_rm_sea_8_alt")
+    {
+        if (xstart != x && xstart != y)
+            do_swap = 1
+    }
+    if (name == "pickup_trinket_rm_lake_extra_6")
+    {
+        if (x == xstart && y == ystart)
+            do_swap = 1
+    }
+    if (name == "pickup_trinket_rm_lab_red_alt")
+    {
+        if (0 < x && x < room_width && 0 < y && y < room_height)
+            do_swap = 1
+    }
+    if do_swap
+    {
+        var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+        randoItem.save_name = ("pickup_trinket_" + room_get_name(room))
+        instance_destroy()
+    }
+}
+
+/*
+	===== gml_Object_opickup_hp_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+{
+    var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+    randoItem.save_name = ("pickup_hp_" + room_get_name(room))
+    instance_destroy()
+}
+
+/*
+	===== gml_Object_opickup_mp_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+{
+    var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+    randoItem.save_name = ("pickup_mp_" + room_get_name(room))
+    instance_destroy()
+}
+
+/*
+	===== gml_Object_opickup_tp_PreCreate_0 =====
+	
+	!!! This script must be created via the Undertale Mod Tool UI !!!
+*/
+
+if global.speedrun_mode_
+{
+    var randoItem = instance_create_depth(x, y, depth, opickup_rando)
+    randoItem.save_name = ("pickup_tp_" + room_get_name(room))
+    instance_destroy()
 }
